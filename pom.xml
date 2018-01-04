@@ -15,89 +15,103 @@
         <maven.compiler.source>1.8</maven.compiler.source>
         <maven.compiler.target>1.8</maven.compiler.target>
         <maven.compiler.plugin.version>3.1</maven.compiler.plugin.version>
+        <scala.version>2.11.0</scala.version>
+        <scala.extension>2.11</scala.extension>
+        <spark.version>1.6.2</spark.version>
+        <netty.version>4.0.33.Final</netty.version>
+        <typesafe.version>1.2.1</typesafe.version>
+        <jobserver.version>0.8.0</jobserver.version>
+        <spark.core.version>2.2.0</spark.core.version>
+        <junit.version>4.11</junit.version>
     </properties>
     <dependencies>
         <dependency>
             <groupId>org.scala-lang</groupId>
             <artifactId>scala-library</artifactId>
-            <version>2.11.0</version>
+            <version>${scala.version}</version>
         </dependency>
         <dependency>
             <groupId>org.apache.spark</groupId>
-            <artifactId>spark-core_2.11</artifactId>
-            <version>1.6.2</version>
+            <artifactId>spark-core_${scala.extension}</artifactId>
+            <version>${spark.version}</version>
             <scope>provided</scope>
         </dependency>
         <dependency>
             <groupId>io.netty</groupId>
             <artifactId>netty-all</artifactId>
-            <version>4.0.33.Final</version>
+            <version>${netty.version}</version>
         </dependency>
         <dependency>
             <groupId>com.typesafe</groupId>
             <artifactId>config</artifactId>
-            <version>1.2.1</version>
+            <version>${typesafe.version}</version>
         </dependency>
         <dependency>
             <groupId>org.apache.spark</groupId>
-            <artifactId>spark-sql_2.11</artifactId>
-            <version>1.6.2</version>
+            <artifactId>spark-sql_${scala.extension}</artifactId>
+            <version>${spark.version}</version>
             <scope>provided</scope>
         </dependency>
         <dependency>
             <groupId>org.apache.spark</groupId>
-            <artifactId>spark-streaming_2.11</artifactId>
-            <version>1.6.2</version>
+            <artifactId>spark-streaming_${scala.extension}</artifactId>
+            <version>${spark.version}</version>
             <scope>provided</scope>
         </dependency>
         <dependency>
             <groupId>spark.jobserver</groupId>
-            <artifactId>job-server-api_2.11</artifactId>
-            <version>0.8.0</version>
+            <artifactId>job-server-api_${scala.extension}</artifactId>
+            <version>${jobserver.version}</version>
             <scope>provided</scope>
         </dependency>
         <dependency>
             <groupId>spark.jobserver</groupId>
-            <artifactId>job-server-extras_2.11</artifactId>
-            <version>0.8.0</version>
+            <artifactId>job-server-extras_${scala.extension}</artifactId>
+            <version>${jobserver.version}</version>
             <scope>provided</scope>
         </dependency>
 
         <dependency>
             <groupId>org.apache.spark</groupId>
             <artifactId>spark-core_2.11</artifactId>
-            <version>2.2.0</version>
+            <version>${spark.core.version}</version>
             <scope>provided</scope>
         </dependency>
 
         <dependency>
             <groupId>org.apache.spark</groupId>
             <artifactId>spark-mllib_2.11</artifactId>
-            <version>2.2.0</version>
+            <version>${spark.core.version}</version>
             <scope>provided</scope>
         </dependency>
         <dependency>
             <groupId>org.apache.spark</groupId>
             <artifactId>spark-sql_2.11</artifactId>
-            <version>2.2.0</version>
+            <version>${spark.core.version}</version>
             <scope>provided</scope>
         </dependency>
         <dependency>
             <groupId>org.apache.spark</groupId>
             <artifactId>spark-streaming_2.11</artifactId>
-            <version>2.2.0</version>
+            <version>${spark.core.version}</version>
             <scope>provided</scope>
         </dependency>
         <dependency>
             <groupId>org.apache.spark</groupId>
-            <artifactId>spark-hive_2.11</artifactId>
-            <version>2.2.0</version>
+            <artifactId>spark-hive_${scala.extension}</artifactId>
+            <version>${spark.core.version}</version>
             <scope>provided</scope>
         </dependency>
         <dependency>
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>
-            <version>4.11</version>
+            <version>${junit.version}</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>com.holdenkarau</groupId>
+            <artifactId>spark-testing-base_2.11</artifactId>
+            <version>2.0.1_0.7.4</version>
             <scope>test</scope>
         </dependency>
     </dependencies>
@@ -110,8 +124,8 @@
                 <artifactId>maven-compiler-plugin</artifactId>
                 <version>3.5</version>
                 <configuration>
-                    <source>1.8</source>
-                    <target>1.8</target>
+                    <source>${maven.compiler.source}</source>
+                    <target>${maven.compiler.target}</target>
                 </configuration>
             </plugin>
             <plugin>
@@ -127,7 +141,7 @@
                     </execution>
                 </executions>
                 <configuration>
-                    <scalaVersion>2.11.0</scalaVersion>
+                    <scalaVersion>${scala.version}</scalaVersion>
                 </configuration>
             </plugin>
         </plugins>

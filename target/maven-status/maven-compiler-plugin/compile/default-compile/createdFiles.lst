@@ -1,2 +1,3 @@
+com/discover/preview/exception/InvalidDataTypeException.class
 com/discover/preview/exception/InvalidFileTypeException.class
 com/discover/preview/exception/InvalidParameterException.class
