@@ -94,6 +94,12 @@
             <version>2.2.0</version>
             <scope>provided</scope>
         </dependency>
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <version>4.11</version>
+            <scope>test</scope>
+        </dependency>
     </dependencies>
     <build>
         <finalName>preview_2.11-0.1.0-SNAPSHOT</finalName>
@@ -107,12 +113,6 @@
                     <source>1.8</source>
                     <target>1.8</target>
                 </configuration>
-                <executions>
-                    <execution>
-                        <id>default-compile</id>
-                        <phase>none</phase>
-                    </execution>
-                </executions>
             </plugin>
             <plugin>
                 <groupId>net.alchim31.maven</groupId>

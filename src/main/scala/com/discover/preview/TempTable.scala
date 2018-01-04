@@ -1,10 +1,13 @@
 package com.discover.preview
 
+import com.discover.preview.`trait`.Reader
+import com.discover.preview.service.ReaderFactory
+import com.discover.preview.validator.ValidateInputFileFormat
 import com.typesafe.config.Config
 import org.apache.spark.sql.{DataFrame, Dataset, Row, SparkSession}
 import org.scalactic._
 import org.scalactic.Accumulation._
-import org.scalactic.{ Every, One }
+import org.scalactic.{Every, One}
 import spark.jobserver._
 import spark.jobserver.api.{JobEnvironment, SingleProblem, ValidationProblem}
 
@@ -23,19 +26,39 @@ object TempTable extends SparkSessionJob  {
     val inputData:String = data.get(locationParam).getOrElse("")
     val tableName:String = data.get(tableParam).getOrElse("")
 
-    val df:DataFrame = sparkSession.read.json(inputData)
+
+    val reader:Reader = ReaderFactory.apply(sparkSession,ValidateInputFileFormat.getFileExtension(inputData))
+    val df:DataFrame = reader.read(inputData)
     df.persist()
     df.createOrReplaceTempView(tableName)
     df.count()
 
   }
 
+  /**
+    * The following parameters should be passed to the context:
+    *   "loc" - full url to the input file
+    *   "tableName" - name of the temporary table
+    *   "file type" - optional file type parameter, if not specified file suffix will be used to determine data type
+    *   ( the following file types are excepted - like JSON, PARQUET, AVRO)
+    * @param config
+    * @param paramName
+    * @return
+    */
   def evaluateParam(config: Config, paramName:String):
+    String  Or Every[ValidationProblem]= {
+
+    Try(config.getString(paramName))
+      .map(inputParam => Good(inputParam))
+      .getOrElse(Bad(One(SingleProblem(s"No parameter ${paramName} found"))))
+  }
+
+  private def evaluateFileExtension(url:String):
   String  Or Every[ValidationProblem]= {
 
-      Try(config.getString(paramName))
-     .map(inputParam => Good(inputParam))
-     .getOrElse(Bad(One(SingleProblem(s"No parameter ${paramName} found"))))
+    Try(ValidateInputFileFormat.getFileExtensionString(url))
+      .map(inputParam => Good(inputParam))
+      .getOrElse(Bad(One(SingleProblem(s"File extension ${url} is not valid"))))
   }
 
   def validate(sparkSession: SparkSession, runtime: JobEnvironment, config: Config):
@@ -43,9 +66,14 @@ object TempTable extends SparkSessionJob  {
 
     var data:JobData = scala.collection.mutable.Map[String, String]()
     val location = evaluateParam(config, locationParam)
+
+     val loc = withGood(location) { (loc) => {
+          loc
+      }
+    }
     val tableName = evaluateParam(config, tableParam)
 
-      withGood(location, tableName) { (loc,tbl) => {
+      withGood(loc, tableName) { (loc,tbl) => {
         data += (locationParam -> loc)
         data += (tableParam -> tbl)
 
