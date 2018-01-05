@@ -17,6 +17,7 @@
         <maven.compiler.plugin.version>3.1</maven.compiler.plugin.version>
         <scala.version>2.11.0</scala.version>
         <scala.extension>2.11</scala.extension>
+
         <spark.version>1.6.2</spark.version>
         <netty.version>4.0.33.Final</netty.version>
         <typesafe.version>1.2.1</typesafe.version>
@@ -31,10 +32,9 @@
             <version>${scala.version}</version>
         </dependency>
         <dependency>
-            <groupId>org.apache.spark</groupId>
-            <artifactId>spark-core_${scala.extension}</artifactId>
-            <version>${spark.version}</version>
-            <scope>provided</scope>
+            <groupId>org.scala-lang</groupId>
+            <artifactId>scala-reflect</artifactId>
+            <version>${scala.version}</version>
         </dependency>
         <dependency>
             <groupId>io.netty</groupId>
@@ -46,27 +46,34 @@
             <artifactId>config</artifactId>
             <version>${typesafe.version}</version>
         </dependency>
-        <dependency>
+        <!-- Spark related -->
+        <!--dependency>
             <groupId>org.apache.spark</groupId>
-            <artifactId>spark-sql_${scala.extension}</artifactId>
+            <artifactId>spark-core_2.11</artifactId>
             <version>${spark.version}</version>
             <scope>provided</scope>
         </dependency>
         <dependency>
             <groupId>org.apache.spark</groupId>
-            <artifactId>spark-streaming_${scala.extension}</artifactId>
+            <artifactId>spark-sql_2.11</artifactId>
             <version>${spark.version}</version>
             <scope>provided</scope>
         </dependency>
+        <dependency>
+            <groupId>org.apache.spark</groupId>
+            <artifactId>spark-streaming_2.11</artifactId>
+            <version>${spark.version}</version>
+            <scope>provided</scope>
+        </dependency-->
         <dependency>
             <groupId>spark.jobserver</groupId>
-            <artifactId>job-server-api_${scala.extension}</artifactId>
+            <artifactId>job-server-api_2.11</artifactId>
             <version>${jobserver.version}</version>
             <scope>provided</scope>
         </dependency>
         <dependency>
             <groupId>spark.jobserver</groupId>
-            <artifactId>job-server-extras_${scala.extension}</artifactId>
+            <artifactId>job-server-extras_2.11</artifactId>
             <version>${jobserver.version}</version>
             <scope>provided</scope>
         </dependency>
@@ -109,11 +116,29 @@
             <scope>test</scope>
         </dependency>
         <dependency>
-            <groupId>com.holdenkarau</groupId>
-            <artifactId>spark-testing-base_2.11</artifactId>
-            <version>2.0.1_0.7.4</version>
+            <groupId>org.scalatest</groupId>
+            <artifactId>scalatest_2.11</artifactId>
+            <version>2.2.2</version>
             <scope>test</scope>
         </dependency>
+        <dependency>
+            <groupId>org.scalacheck</groupId>
+            <artifactId>scalacheck_2.11</artifactId>
+            <version>1.12.2</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.scalamock</groupId>
+            <artifactId>scalamock-scalatest-support_2.11</artifactId>
+            <version>3.6.0</version>
+            <scope>test</scope>
+        </dependency>
+        <!--dependency>
+            <groupId>com.holdenkarau</groupId>
+            <artifactId>spark-testing-base_2.10</artifactId>
+            <version>1.6.0_0.4.7</version>
+            <scope>test</scope>
+        </dependency-->
     </dependencies>
     <build>
         <finalName>preview_2.11-0.1.0-SNAPSHOT</finalName>

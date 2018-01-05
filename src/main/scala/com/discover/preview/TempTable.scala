@@ -31,7 +31,7 @@ object TempTable extends SparkSessionJob  {
     val df:DataFrame = reader.read(inputData)
     df.persist()
     df.createOrReplaceTempView(tableName)
-    df.count()
+    "Table:"+tableName+" has been created. Total number of records:"+df.count()+ " Schema:"+df.schema
 
   }
 
